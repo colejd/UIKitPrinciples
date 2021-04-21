@@ -16,7 +16,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        let window = UIWindow(windowScene: windowScene)
+
+        /*
+         You could just present a single ViewController here, but that doesn't get you a navigation bar.
+         To do that, we're going to make a navigation controller. Navigation Controllers hold a stack of
+         ViewControllers. When you want to show a new ViewController, you make it, then push it
+         onto the navigation controller's stack. When that happens, the new ViewController will show,
+         and the navigation bar will automatically get a Back button.
+         */
+        let vc = BasicViewController()
+//        let vc = MapViewController() // When you're ready, try using MapViewController instead.
+        let navigationController = UINavigationController(rootViewController: vc)
+
+        // We now make the navigation controller the root of the whole app,
+        // causing it to be presented first when the app opens.
+        window.rootViewController = navigationController
+        window.makeKeyAndVisible()
+        self.window = window
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
